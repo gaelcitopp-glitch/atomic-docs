@@ -29,7 +29,6 @@ You should not. Auto is always armed unless its Activation is set to **Hold**. I
 ## Getting hit through Anti Future
 
 - Increase `Studs` a little for a larger gap.
-- Confirm `AntiResolver` is `true`.
 - Try `Blink` mode for a harder, harder to predict desync at speed.
 
 ## Shots not registering

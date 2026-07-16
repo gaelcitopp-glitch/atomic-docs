@@ -12,6 +12,7 @@ The headline defensive feature. It stops enemies from "futuring" you, which is w
 - While you move, it desyncs the position the **server** sees, biased **perpendicular** to your velocity. Because prediction leads along your velocity, a sideways error cannot be cancelled out, so an enemy misses regardless of how much lead they apply.
 - Locally it feels exactly like it is off. Your movement, camera, and animations stay at your real position, and there is no fling.
 - A neon white **server ball** shows where the server thinks you are, along with the stud gap between you and it.
+- It resists resolvers by default. The path uses a perpendicular bias, incommensurate oscillation, and a slowly wandering center, so an enemy that averages your positions still cannot recover your real spot.
 
 **Modes**
 
@@ -20,23 +21,18 @@ The headline defensive feature. It stops enemies from "futuring" you, which is w
 | `Orbit` | A smooth, bounded path that continuously moves your reported position so an attacker's observation is always stale by the time their shot validates. It keeps a protective floor even at rest and grows with your speed. |
 | `Blink` | A hard, randomized teleport of the reported position each update, with no continuous path to track or average. Its magnitude scales with your movement speed, so it is strongest exactly when you are hardest to hit. |
 
-**Anti-Resolver**
-
-Plain jitter is easy to beat, since a resolver can average your positions to recover the real one. Atomic drives the reported position along an engineered path (perpendicular bias, incommensurate oscillation, and a slowly wandering center) so averaging lands off your real spot and cannot lock on. This is on by default.
-
 **Config**
 
 ```lua
-Character = {
+['Character'] = {
     ['Anti Future'] = {
-        Enabled = true,
-        Mode = 'Orbit',       -- 'Orbit' or 'Blink'
-        Studs = 15,           -- max desync in studs, scales with speed
-        AntiResolver = true,  -- optional, default true
+        ['Enabled'] = true,
+        ['Mode'] = 'Orbit',
+        ['Studs'] = 15,
     },
 },
-Keybinds = {
-    ['Anti Future'] = 'V',    -- toggle key; leave unset to run while enabled
+['Keybinds'] = {
+    ['Anti Future'] = 'V',
 },
 ```
 
@@ -45,7 +41,6 @@ Keybinds = {
 | `Enabled` | Master on and off for the feature. |
 | `Mode` | `Orbit` for the smooth bounded path, `Blink` for the hard teleport. |
 | `Studs` | The largest allowed desync. It scales up to this value as you move faster. |
-| `AntiResolver` | Keep `true`. Set `false` to fall back to plain jitter, which is not recommended. |
 
 !!! tip "Speed scaling"
     Both modes scale with your movement. `Blink` reaches full strength as you pick up speed, while `Orbit` keeps a protective floor even when you are standing still, so you are never fully exposed.
