@@ -1,6 +1,6 @@
 # Hit Locations
 
-Every combat feature aims at a **Hit Location**, a body part on your target. The model below is interactive so you can see exactly what each option resolves to on a real Roblox avatar.
+Every combat feature aims at a **Hit Location**, a body part on your target. The model below is interactive so you can see exactly what each option resolves to on Roblox's official Classic avatar model.
 
 Drag to orbit the model. Move your mouse over the body to drive **Closest Part** and **Closest Point**, the same way your cursor drives aim in game. The neon dot is the resolved aim position.
 
