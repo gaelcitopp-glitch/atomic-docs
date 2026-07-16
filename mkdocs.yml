@@ -1,8 +1,8 @@
 site_name: Atomic Docs
 site_url: https://beatomic.club/
-site_description: How to set up and configure Atomic — the short, no-nonsense guide.
+site_description: How to set up and configure Atomic, the short and focused guide.
 site_author: Atomic
-copyright: Atomic — for educational purposes only.
+copyright: Atomic. For educational purposes only.
 
 theme:
   name: material
@@ -81,3 +81,10 @@ nav:
 
 extra:
   generator: false
+  social:
+    - icon: fontawesome/brands/discord
+      link: https://discord.gg/beatomicc
+      name: Atomic Discord
+    - icon: fontawesome/solid/globe
+      link: https://weao.xyz/
+      name: Find an executor (WEAO)

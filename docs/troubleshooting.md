@@ -1,44 +1,42 @@
 # Troubleshooting
 
-Quick fixes for the stuff people actually run into.
+Quick fixes for the issues people actually run into.
 
 ## "Inject config before running the script"
 
-Your config table isn't populated yet. Open the menu, let it save your settings, then run Atomic again. Atomic needs the config to exist first.
+Your config table is not populated yet. Open the menu, let it save your settings, then run Atomic again. Atomic needs the config to exist first.
 
-## A setting isn't doing anything
+## A setting is not doing anything
 
-- Give it **~1 second** — Atomic re-reads the config on an interval, it's not instant.
-- Double-check the feature's **`Enabled`** flag is on.
-- If it's a combat feature, make sure a target is **inside its FOV** (that's the activation gate).
-- If it uses a key, confirm the **keybind** is set and you're using the right Activation (`Toggle` vs `Hold`).
+- Give it about a second. Atomic re-reads the config on an interval, so it is not instant.
+- Confirm the feature's `Enabled` flag is on.
+- If it is a combat feature, make sure a target is inside its FOV, which is the activation gate.
+- If it uses a key, confirm the keybind is set and you are using the right Activation (`Toggle` or `Hold`).
 
-## Combat feature "locks onto one person" and won't switch
+## A combat feature locks onto one person and will not switch
 
-You're probably in **Select** mode — that's *supposed* to be sticky. Switch the Mode to **Auto** if you want it to pick and re-target automatically. See [Modes](configuration.md#modes-select-vs-auto).
+You are probably in **Select** mode, which is meant to be sticky. Switch the Mode to **Auto** if you want it to pick and re-target automatically. See [Modes](configuration.md#modes-select-vs-auto).
 
 ## "I have to press a key in Auto mode"
 
-You shouldn't. **Auto is always armed** unless its Activation is set to **Hold**. If it's `Auto` + `Toggle`, the key is intentionally ignored — just move your crosshair and it works.
+You should not. Auto is always armed unless its Activation is set to **Hold**. If it is `Auto` with `Toggle`, the key is intentionally ignored. Just move your crosshair and it works.
 
-## It's slow to load / freezes on startup
+## It is slow to load or freezes on startup
 
-- Atomic is built for weak executors, but **Skin Changer / Unlock All** are heavy. They only load when enabled — if startup is rough, make sure you're not enabling them if you don't need them.
+- Atomic supports lighter executors, but **Skin Changer** and **Unlock All** are heavy. They only load when enabled, so if startup is rough, avoid enabling them unless you need them.
 - Try a fresh inject after fully rejoining the game.
 
 ## Getting hit through Anti Future
 
-- Remember it scales with movement — **standing still means 0 desync** (by design). If you're static, you're an easy target regardless.
-- Bump `Studs` up a little for a bigger gap.
-- Make sure `AntiResolver` is `true`.
+- Increase `Studs` a little for a larger gap.
+- Confirm `AntiResolver` is `true`.
+- Try `Blink` mode for a harder, harder to predict desync at speed.
 
 ## Shots not registering
 
-- Check your **Hit Location** — aiming at a part that's obstructed can whiff.
-- Make sure any **Wall Check / Visible** condition isn't filtering out targets you expect to hit.
-- Confirm you're on a **supported game** for that feature.
-
----
+- Check your **Hit Location**. Aiming at an obstructed part can whiff.
+- Make sure any **Wall Check** or **Visible** condition is not filtering out targets you expect to hit.
+- Confirm you are on a supported game for that feature.
 
 !!! question "Still stuck?"
-    Re-read [Configuration](configuration.md) — 90% of "it's not working" turns out to be a Mode / Activation / FOV mismatch.
+    Re-read [Configuration](configuration.md). Most "it is not working" reports turn out to be a Mode, Activation, or FOV mismatch. If you are still stuck, ask in the Atomic Discord at [discord.gg/beatomicc](https://discord.gg/beatomicc).

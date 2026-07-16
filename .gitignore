@@ -3,3 +3,6 @@ site/
 __pycache__/
 *.pyc
 .venv/
+
+# Generated at build time by scripts/fetch_avatar.py
+docs/assets/avatar/

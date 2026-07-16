@@ -2,18 +2,18 @@
 
 # Atomic
 
-<p class="tagline">The fast, clean, 1:1 emulation cheat. This is the short guide to setting it up — not a wall of text.</p>
+<p class="tagline">A fast, clean combat suite built on 1:1 game emulation. This is a focused setup guide, not a wall of text.</p>
 
 </div>
 
-Welcome. These docs cover **how to configure Atomic** and what the **main features** actually do. They do **not** try to document every single toggle — the config menu changes and grows all the time, so anything not covered here follows the same patterns you'll learn on the [Configuration](configuration.md) page.
+Welcome. These docs cover how to configure Atomic and what the main features do. They are not an exhaustive list of every toggle. The in game menu evolves continuously, so anything not covered here follows the same patterns you will learn on the [Configuration](configuration.md) page.
 
 !!! tip "Read this first"
-    If you only read one page, make it **[Configuration](configuration.md)**. Once you get how *Modes*, *Activation*, *FOV*, and *Keybinds* work, every combat feature clicks into place.
+    If you read one page, make it [Configuration](configuration.md). Once *Modes*, *Activation*, *FOV*, and *Keybinds* make sense, every combat feature falls into place.
 
 ## What is Atomic?
 
-Atomic is a feature set built around **1:1 game emulation** — it replicates the game's own aim/shoot/spread logic instead of faking it, so shots behave like the real thing. It's tuned to run well even on weaker executors.
+Atomic is built on **1:1 game emulation**. It replicates the game's own aim, shoot, and spread logic rather than faking it, so shots behave like the real thing. It is engineered to run cleanly with support for every executor you want, from high end down to the lightweight ones. This is the only place these docs get into how the emulation works; everything after this is about using it.
 
 ## Jump in
 
@@ -23,7 +23,7 @@ Atomic is a feature set built around **1:1 game emulation** — it replicates th
 
     ---
 
-    Load the script, make sure your config is injected, and get in-game.
+    Load the script, confirm your config is injected, and get in game.
 
 -   :material-cog: **[Configuration](configuration.md)**
 
@@ -35,24 +35,29 @@ Atomic is a feature set built around **1:1 game emulation** — it replicates th
 
     ---
 
-    Silent Aim, Trigger Bot, and Aim Assist — the three main combat tools.
+    Silent Aim, Trigger Bot, and Aim Assist, the three main combat tools.
 
 -   :material-shield-account: **[Character](features/character.md)**
 
     ---
 
-    Anti Future (with the anti-resolver), Anti Aim, movement, and more.
+    Anti Future, Anti Aim, movement, and more.
 
 </div>
 
-## How the settings work (30-second version)
+## How the settings work
 
-- Everything is driven by a **config table** the loader injects (the in-game UI writes to it).
+- Everything is driven by a **config table** the loader injects. The in game UI writes to it.
 - Settings are grouped into **sections**: `Combat`, `Character`, `Visuals`, `Keybinds`, `Gun Modifications`, `Misc`, and so on.
-- Changes apply **live** — Atomic re-reads the config every second, so you don't need to reinject.
-- The three combat features (**Silent Aim / Trigger Bot / Aim Assist**) all share the same targeting model, so once you learn one you know all three.
+- Changes apply **live**. Atomic re-reads the config every second, so there is no need to reinject.
+- The three combat features (**Silent Aim**, **Trigger Bot**, **Aim Assist**) share the same targeting model, so learning one teaches you all three.
 
-<span class="pill">Note</span> Feature names and layout may differ slightly between games (Da Hood, Der Hood, etc.). The concepts stay the same.
+<span class="pill">Note</span> Feature names and layout can differ slightly between games (Da Hood, Der Hood, and others). The concepts stay the same.
+
+## Community and executors
+
+- **Discord:** join [discord.gg/beatomicc](https://discord.gg/beatomicc) for support, updates, and status.
+- **Need an executor?** Use [weao.xyz](https://weao.xyz/) to find official executor pages, pricing, and live uptime, and to confirm your executor is up to date.
 
 !!! warning "Disclaimer"
     Atomic is provided for educational purposes. Using it may violate a game's Terms of Service. You use it at your own risk.

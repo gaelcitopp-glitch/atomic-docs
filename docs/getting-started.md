@@ -1,37 +1,40 @@
 # Getting Started
 
-This page gets you from "nothing" to "in-game and shooting" as fast as possible.
+This page takes you from nothing to in game and shooting as quickly as possible.
 
 ## What you need
 
-- A Roblox executor (Atomic is built to run even on the weaker ones).
-- Your Atomic key / loader (however you normally get the script).
+- A Roblox executor. Atomic has support for every executor you want, including the lightweight ones. If you need one or want to verify it is current, check [weao.xyz](https://weao.xyz/) for official pages, pricing, and uptime.
+- Your Atomic key or loader (however you normally obtain the script).
 - One of the supported games open.
 
 ## Loading Atomic
 
 1. Join the game.
-2. Run your loader / paste the script in your executor and execute.
-3. Wait a second or two — Atomic boots, reads your config, and you're live.
+2. Run your loader, or paste the script into your executor and execute.
+3. Wait a second or two. Atomic boots, reads your config, and goes live.
 
-!!! info "The config has to exist before you run"
-    Atomic reads its settings from an injected config table. Your loader/UI handles this for you. If Atomic prints something like *"inject config before running the script"*, it means the UI hasn't populated your settings yet — open the menu, let it save, then re-run.
+!!! info "The config must exist before you run"
+    Atomic reads its settings from an injected config table, which your loader or UI handles for you. If Atomic prints something like *"inject config before running the script"*, the UI has not populated your settings yet. Open the menu, let it save, then run again.
 
 ## Settings apply live
 
-You don't need to re-execute after changing a setting. Atomic re-reads your config **every second**, so:
+You do not need to re-execute after changing a setting. Atomic re-reads your config **every second**:
 
-- Toggle something in the menu → it takes effect within ~1s.
-- Change a value (like a distance or FOV size) → same deal.
+- Toggle something in the menu and it takes effect within about a second.
+- Change a value such as a distance or FOV size and the same applies.
 
 The only things you set once are your **keybinds** (see [Configuration](configuration.md#keybinds)).
 
 ## First-time setup checklist
 
-- [x] Pick your **combat feature** (most people start with Silent Aim).
-- [x] Choose a **Mode** — `Select` if you want to lock a target manually, `Auto` if you want it to pick for you. ([What's the difference?](configuration.md#modes-select-vs-auto))
-- [x] Set an **Activation** type (`Toggle` or `Hold`) and bind a key if you're using `Select`.
-- [x] Turn on an **FOV** so it only engages targets near your crosshair.
-- [x] (Optional) Enable **ESP** and the **Keybinds HUD** so you can see what's active.
+- [x] Pick your **combat feature**. Most people start with Silent Aim.
+- [x] Choose a **Mode**. Use `Select` to lock a target manually, or `Auto` to have it pick for you. ([What is the difference?](configuration.md#modes-select-vs-auto))
+- [x] Set an **Activation** type (`Toggle` or `Hold`) and bind a key if you are using `Select`.
+- [x] Enable an **FOV** so it only engages targets near your crosshair.
+- [x] Optionally enable **ESP** and the **Keybinds HUD** so you can see what is active.
 
-That's it. Head to [Configuration](configuration.md) to actually understand those knobs.
+That is the essentials. Head to [Configuration](configuration.md) to understand each control.
+
+!!! question "Need help?"
+    Join the Atomic Discord at [discord.gg/beatomicc](https://discord.gg/beatomicc).
