@@ -15,7 +15,7 @@ Your config is a large table split into sections. The ones you will touch most:
 | `Keybinds` | Every key you bind |
 | `Misc` | Odds and ends such as Panic Ground and Hitbox Expander |
 
-Anything not documented here follows the same shape and idea. Adjust it in the menu and it behaves like its neighbors.
+Anything not documented here follows the same shape and idea. Set it in your config and it behaves like its neighbors.
 
 ## Modes: Select vs Auto
 

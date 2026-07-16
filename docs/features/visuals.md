@@ -8,7 +8,7 @@ Highlights players so you always know where everyone is.
 
 - Toggle with the `ESP` keybind or its `Enabled` flag.
 - Typical options include names, boxes, and a target line to whoever you are currently locked onto.
-- Colors and displayed elements are configurable in the menu.
+- Colors and displayed elements are set in your config.
 
 ## Keybinds HUD
 
@@ -25,7 +25,7 @@ Cosmetic changer for weapons and skins.
 !!! info "It loads on demand"
     The skin system is heavy, so Atomic only starts it when you actually enable Skin Changer or Unlock All. This keeps startup fast and avoids freezes on lighter executors. If you do not use it, it costs you nothing.
 
-- Turn it on and pick your skins in the menu.
+- Turn it on and pick your skins in your config.
 - Knife skins are served from a built in list rather than a heavy module, so they stay fast on lighter executors.
 
 !!! note

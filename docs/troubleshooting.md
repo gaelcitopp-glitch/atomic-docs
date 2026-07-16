@@ -4,7 +4,7 @@ Quick fixes for the issues people actually run into.
 
 ## "Inject config before running the script"
 
-Your config table is not populated yet. Open the menu, let it save your settings, then run Atomic again. Atomic needs the config to exist first.
+Your config table has not been provided yet. Make sure your loader defines your settings, then run Atomic again. Atomic needs the config to exist first.
 
 ## A setting is not doing anything
 

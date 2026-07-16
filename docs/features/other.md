@@ -1,6 +1,6 @@
 # Everything Else
 
-Atomic has more toggles than any document can keep current, and the menu grows over time. Rather than list every one, here is the general map so you can find and understand anything on your own.
+Atomic has more toggles than any document can keep current, and the config grows over time. Rather than list every one, here is the general map so you can find and understand anything on your own.
 
 ## The rule of thumb
 
@@ -37,4 +37,4 @@ A grab bag of utilities. Common examples:
 Some games, including Da Hood and Der Hood, have extras that only appear where they are supported. They follow the same patterns, so treat them like everything above: a toggle, a value, or a toggle plus a key.
 
 !!! tip "When in doubt"
-    Open the option in the menu, change it, and watch what happens in game. Changes apply within about a second, and nothing here is permanent, so experiment freely.
+    Change the option in your config and watch what happens in game. Changes apply within about a second, and nothing here is permanent, so experiment freely.

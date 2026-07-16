@@ -60,7 +60,7 @@ Feeds enemies a bad velocity so velocity based prediction whiffs. Toggle it with
 | `JumpPower` | Override your jump power. |
 | `Anti Fling` | Resists common fling exploits. |
 
-These are straightforward toggles and values. Flip them in the menu and they apply live.
+These are straightforward toggles and values. Set them in your config and they apply live.
 
 !!! note
     God Mode and some other defensive options are game specific and appear where they are supported. Any option not listed here still follows the same pattern of a toggle plus an optional keybind.

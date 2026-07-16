@@ -6,7 +6,7 @@
 
 </div>
 
-Welcome. These docs cover how to configure Atomic and what the main features do. They are not an exhaustive list of every toggle. The in game menu evolves continuously, so anything not covered here follows the same patterns you will learn on the [Configuration](configuration.md) page.
+Welcome. These docs cover how to configure Atomic and what the main features do. They are not an exhaustive list of every toggle. The config evolves continuously, so anything not covered here follows the same patterns you will learn on the [Configuration](configuration.md) page.
 
 !!! tip "Read this first"
     If you read one page, make it [Configuration](configuration.md). Once *Modes*, *Activation*, *FOV*, and *Keybinds* make sense, every combat feature falls into place.
@@ -47,7 +47,7 @@ Atomic is built on **1:1 game emulation**. It replicates the game's own aim, sho
 
 ## How the settings work
 
-- Everything is driven by a **config table** the loader injects. The in game UI writes to it.
+- Everything is driven by a **config table** your loader injects.
 - Settings are grouped into **sections**: `Combat`, `Character`, `Visuals`, `Keybinds`, `Gun Modifications`, `Misc`, and so on.
 - Changes apply **live**. Atomic re-reads the config every second, so there is no need to reinject.
 - The three combat features (**Silent Aim**, **Trigger Bot**, **Aim Assist**) share the same targeting model, so learning one teaches you all three.

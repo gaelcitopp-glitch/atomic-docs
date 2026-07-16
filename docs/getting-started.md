@@ -15,13 +15,13 @@ This page takes you from nothing to in game and shooting as quickly as possible.
 3. Wait a second or two. Atomic boots, reads your config, and goes live.
 
 !!! info "The config must exist before you run"
-    Atomic reads its settings from an injected config table, which your loader or UI handles for you. If Atomic prints something like *"inject config before running the script"*, the UI has not populated your settings yet. Open the menu, let it save, then run again.
+    Atomic reads its settings from an injected config table that your loader provides. If Atomic prints something like *"inject config before running the script"*, the config has not been provided yet. Make sure your loader defines it, then run again.
 
 ## Settings apply live
 
 You do not need to re-execute after changing a setting. Atomic re-reads your config **every second**:
 
-- Toggle something in the menu and it takes effect within about a second.
+- Toggle a feature on or off in your config and it takes effect within about a second.
 - Change a value such as a distance or FOV size and the same applies.
 
 The only things you set once are your **keybinds** (see [Configuration](configuration.md#keybinds)).
