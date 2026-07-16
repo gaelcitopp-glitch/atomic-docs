@@ -1,21 +1,22 @@
 // Interactive 3D hit-location model for the Atomic docs.
-// Loads a real Roblox avatar (downloaded at build time from the official Roblox
-// 3D thumbnail API into assets/avatar/). If those files are unavailable it falls
-// back to a built-in blocky rig so the page always works. The neon dot follows
-// your MOUSE and lands on the model surface, mirroring how aim tracks the cursor.
+// A faithful R15 Roblox avatar rendered in 3D. Body colors and the R15 body
+// type are taken from Roblox's public avatar API (userId 1). The neon dot
+// follows your MOUSE and lands on the model surface, mirroring how aim tracks
+// the cursor in game.
 import * as THREE from 'three';
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
-import { OBJLoader } from 'three/addons/loaders/OBJLoader.js';
-import { MTLLoader } from 'three/addons/loaders/MTLLoader.js';
 
 const canvas = document.getElementById('hp-canvas');
 if (canvas && window.WebGLRenderingContext) {
-  const AV = '../../assets/avatar/';
   const stage   = document.getElementById('hp-stage');
   const readout = document.getElementById('hp-readout');
   const hint    = document.getElementById('hp-hint');
   const ACCENT  = 0xa855f7;
   const accentCol = new THREE.Color(ACCENT);
+
+  // Real body colors for userId 1 from avatar.roblox.com (BrickColor -> RGB):
+  // head/arms 194 Medium stone grey, torso 23 Bright blue, legs 102 Medium blue.
+  const C_HEAD = 0xa3a2a5, C_ARM = 0xa3a2a5, C_TORSO = 0x0d69ac, C_LEG = 0x6e99ca;
 
   const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true });
   renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
@@ -39,101 +40,58 @@ if (canvas && window.WebGLRenderingContext) {
   const keyLight = new THREE.DirectionalLight(0xffffff, 1.5); keyLight.position.set(5, 9, 7); scene.add(keyLight);
   const rimLight = new THREE.DirectionalLight(ACCENT, 0.85);  rimLight.position.set(-6, 2, -5); scene.add(rimLight);
 
-  // Hit regions in a normalized R15 layout (origin at body center, Y up). These
-  // stay invisible and act as pick proxies; a translucent accent box is shown
-  // over the region that is currently selected or under the cursor.
+  // R15 rig laid out around the origin (studs, Y up). Every entry is both a
+  // visible body part and a pickable hit region, so highlighting is exact.
   const REGIONS = [
-    { name: 'Head',            x: 0,    y: 2.35,  z: 0,    w: 1.15, h: 1.15, d: 1.15 },
-    { name: 'UpperTorso',      x: 0,    y: 1.0,   z: 0,    w: 1.95, h: 1.3,  d: 0.95 },
-    { name: 'LowerTorso',      x: 0,    y: 0.05,  z: 0,    w: 1.85, h: 0.85, d: 0.9  },
+    { name: 'Head',            x: 0,    y: 2.35,  z: 0,    w: 1.15, h: 1.15, d: 1.15, color: C_HEAD },
+    { name: 'UpperTorso',      x: 0,    y: 1.0,   z: 0,    w: 1.95, h: 1.3,  d: 0.95, color: C_TORSO },
+    { name: 'LowerTorso',      x: 0,    y: 0.05,  z: 0,    w: 1.85, h: 0.85, d: 0.9,  color: C_TORSO },
     { name: 'HumanoidRootPart',x: 0,    y: 0.55,  z: 0,    w: 1.55, h: 1.6,  d: 0.78, core: true },
-    { name: 'LeftUpperArm',    x: -1.3, y: 1.15,  z: 0,    w: 0.6,  h: 1.2,  d: 0.7  },
-    { name: 'LeftLowerArm',    x: -1.3, y: 0.1,   z: 0,    w: 0.55, h: 0.95, d: 0.62 },
-    { name: 'LeftHand',        x: -1.3, y: -0.55, z: 0,    w: 0.55, h: 0.42, d: 0.6  },
-    { name: 'RightUpperArm',   x: 1.3,  y: 1.15,  z: 0,    w: 0.6,  h: 1.2,  d: 0.7  },
-    { name: 'RightLowerArm',   x: 1.3,  y: 0.1,   z: 0,    w: 0.55, h: 0.95, d: 0.62 },
-    { name: 'RightHand',       x: 1.3,  y: -0.55, z: 0,    w: 0.55, h: 0.42, d: 0.6  },
-    { name: 'LeftUpperLeg',    x: -0.5, y: -1.2,  z: 0,    w: 0.72, h: 1.3,  d: 0.75 },
-    { name: 'LeftLowerLeg',    x: -0.5, y: -2.35, z: 0,    w: 0.62, h: 1.1,  d: 0.66 },
-    { name: 'LeftFoot',        x: -0.5, y: -2.95, z: 0.1,  w: 0.72, h: 0.42, d: 0.95 },
-    { name: 'RightUpperLeg',   x: 0.5,  y: -1.2,  z: 0,    w: 0.72, h: 1.3,  d: 0.75 },
-    { name: 'RightLowerLeg',   x: 0.5,  y: -2.35, z: 0,    w: 0.62, h: 1.1,  d: 0.66 },
-    { name: 'RightFoot',       x: 0.5,  y: -2.95, z: 0.1,  w: 0.72, h: 0.42, d: 0.95 },
+    { name: 'LeftUpperArm',    x: -1.3, y: 1.15,  z: 0,    w: 0.6,  h: 1.2,  d: 0.7,  color: C_ARM },
+    { name: 'LeftLowerArm',    x: -1.3, y: 0.1,   z: 0,    w: 0.55, h: 0.95, d: 0.62, color: C_ARM },
+    { name: 'LeftHand',        x: -1.3, y: -0.55, z: 0,    w: 0.55, h: 0.42, d: 0.6,  color: C_ARM },
+    { name: 'RightUpperArm',   x: 1.3,  y: 1.15,  z: 0,    w: 0.6,  h: 1.2,  d: 0.7,  color: C_ARM },
+    { name: 'RightLowerArm',   x: 1.3,  y: 0.1,   z: 0,    w: 0.55, h: 0.95, d: 0.62, color: C_ARM },
+    { name: 'RightHand',       x: 1.3,  y: -0.55, z: 0,    w: 0.55, h: 0.42, d: 0.6,  color: C_ARM },
+    { name: 'LeftUpperLeg',    x: -0.5, y: -1.2,  z: 0,    w: 0.72, h: 1.3,  d: 0.75, color: C_LEG },
+    { name: 'LeftLowerLeg',    x: -0.5, y: -2.35, z: 0,    w: 0.62, h: 1.1,  d: 0.66, color: C_LEG },
+    { name: 'LeftFoot',        x: -0.5, y: -2.95, z: 0.1,  w: 0.72, h: 0.42, d: 0.95, color: C_LEG },
+    { name: 'RightUpperLeg',   x: 0.5,  y: -1.2,  z: 0,    w: 0.72, h: 1.3,  d: 0.75, color: C_LEG },
+    { name: 'RightLowerLeg',   x: 0.5,  y: -2.35, z: 0,    w: 0.62, h: 1.1,  d: 0.66, color: C_LEG },
+    { name: 'RightFoot',       x: 0.5,  y: -2.95, z: 0.1,  w: 0.72, h: 0.42, d: 0.95, color: C_LEG },
   ];
 
-  const regionGroup = new THREE.Group();
-  scene.add(regionGroup);
-  const regions = {};
+  const avatar = new THREE.Group();
+  scene.add(avatar);
+  const parts = {};
   for (const r of REGIONS) {
-    const mesh = new THREE.Mesh(
-      new THREE.BoxGeometry(r.w, r.h, r.d),
-      new THREE.MeshBasicMaterial({ color: ACCENT, transparent: true, opacity: 0, depthWrite: false })
-    );
+    let material;
+    if (r.core) {
+      material = new THREE.MeshBasicMaterial({ color: ACCENT, transparent: true, opacity: 0, depthWrite: false });
+    } else {
+      material = new THREE.MeshStandardMaterial({ color: r.color, roughness: 0.55, metalness: 0.04 });
+    }
+    const mesh = new THREE.Mesh(new THREE.BoxGeometry(r.w, r.h, r.d), material);
     mesh.position.set(r.x, r.y, r.z);
     mesh.name = r.name;
     mesh.userData.core = !!r.core;
-    regionGroup.add(mesh);
-    regions[r.name] = mesh;
+    if (!r.core) mesh.userData.base = new THREE.Color(r.color);
+    avatar.add(mesh);
+    parts[r.name] = mesh;
   }
-  const pickRegions = Object.values(regions).filter(m => !m.userData.core);
+  const bodyParts = Object.values(parts).filter(p => !p.userData.core);
 
-  // Visual body (real avatar mesh, or the fallback rig). `bodyMeshes` holds the
-  // meshes the Closest Point ray tests against.
-  const body = new THREE.Group();
-  scene.add(body);
-  let bodyMeshes = [];
-
-  function buildFallbackRig() {
-    const SKIN = 0xf4d47c, SHIRT = 0x6d28d9, PANTS = 0x24242e;
-    const tone = { Head: SKIN, LeftHand: SKIN, RightHand: SKIN,
-      LeftUpperLeg: PANTS, LeftLowerLeg: PANTS, LeftFoot: PANTS,
-      RightUpperLeg: PANTS, RightLowerLeg: PANTS, RightFoot: PANTS };
-    for (const r of REGIONS) {
-      if (r.core) continue;
-      const mesh = new THREE.Mesh(
-        new THREE.BoxGeometry(r.w, r.h, r.d),
-        new THREE.MeshStandardMaterial({ color: tone[r.name] || SHIRT, roughness: 0.5, metalness: 0.04 })
-      );
-      mesh.position.set(r.x, r.y, r.z);
-      body.add(mesh);
-      bodyMeshes.push(mesh);
-    }
-    const eyeMat = new THREE.MeshStandardMaterial({ color: 0x15151d });
-    for (const sx of [-0.26, 0.26]) {
-      const eye = new THREE.Mesh(new THREE.BoxGeometry(0.16, 0.22, 0.05), eyeMat);
-      eye.position.set(sx, 2.45, 0.61);
-      body.add(eye);
-    }
+  // Classic Roblox smile so the head reads as a real avatar.
+  const faceMat = new THREE.MeshStandardMaterial({ color: 0x1a1a1f });
+  for (const sx of [-0.26, 0.26]) {
+    const eye = new THREE.Mesh(new THREE.BoxGeometry(0.15, 0.2, 0.05), faceMat);
+    eye.position.set(sx, 2.46, 0.61);
+    avatar.add(eye);
   }
-
-  function fitToRig(obj) {
-    // Scale + center the downloaded avatar so it matches the normalized rig.
-    const box = new THREE.Box3().setFromObject(obj);
-    const size = new THREE.Vector3(); box.getSize(size);
-    const center = new THREE.Vector3(); box.getCenter(center);
-    const scale = size.y > 0 ? (5.8 / size.y) : 1;
-    obj.scale.setScalar(scale);
-    obj.position.set(-center.x * scale, -center.y * scale, -center.z * scale);
-    obj.traverse(c => { if (c.isMesh) bodyMeshes.push(c); });
-  }
-
-  function loadRealAvatar() {
-    const mtl = new MTLLoader();
-    mtl.setPath(AV);
-    mtl.setResourcePath(AV);
-    mtl.load('avatar.mtl', (materials) => {
-      materials.preload();
-      const obj = new OBJLoader();
-      obj.setMaterials(materials);
-      obj.setPath(AV);
-      obj.load('avatar.obj', (group) => {
-        fitToRig(group);
-        body.add(group);
-      }, undefined, buildFallbackRig);
-    }, undefined, buildFallbackRig);
-  }
-
-  loadRealAvatar();
+  const smile = new THREE.Mesh(new THREE.TorusGeometry(0.28, 0.045, 10, 24, Math.PI), faceMat);
+  smile.rotation.z = Math.PI;
+  smile.position.set(0, 2.18, 0.61);
+  avatar.add(smile);
 
   // Neon aim marker.
   const marker = new THREE.Mesh(new THREE.SphereGeometry(0.13, 20, 20),
@@ -156,54 +114,54 @@ if (canvas && window.WebGLRenderingContext) {
 
   let mode = 'Head';
 
-  function clearRegions() {
-    for (const name in regions) regions[name].material.opacity = 0;
-  }
-  function showRegion(name) {
-    const m = regions[name];
-    if (m) m.material.opacity = m.userData.core ? 0.5 : 0.42;
-  }
-  function nearestRegionToPoint(p) {
-    let best = null, bd = Infinity;
-    for (const m of pickRegions) {
-      const d = m.position.distanceToSquared(p);
-      if (d < bd) { bd = d; best = m; }
+  function clearHighlights() {
+    for (const name in parts) {
+      const p = parts[name];
+      p.material.emissive && p.material.emissive.setHex(0x000000);
+      if (p.userData.core) p.material.opacity = 0;
+      else p.material.color.copy(p.userData.base);
     }
-    return best;
+  }
+  function highlight(mesh) {
+    if (!mesh) return;
+    if (mesh.userData.core) {
+      mesh.material.opacity = 0.5;
+    } else {
+      mesh.material.emissive.copy(accentCol);
+      mesh.material.emissiveIntensity = 0.5;
+      mesh.material.color.copy(mesh.userData.base).lerp(accentCol, 0.3);
+    }
   }
 
   function update() {
-    clearRegions();
+    clearHighlights();
     marker.visible = false;
     raycaster.setFromCamera(mouse, camera);
 
     if (mode === 'ClosestPart' || mode === 'ClosestPoint') {
-      if (!hasMouse) { readout.textContent = (mode === 'ClosestPoint' ? 'Closest Point' : 'Closest Part') + ' \u2192 move your mouse over the body'; return; }
-      if (mode === 'ClosestPoint') {
-        const hits = bodyMeshes.length ? raycaster.intersectObjects(bodyMeshes, true) : [];
-        if (hits.length) {
+      if (!hasMouse) {
+        readout.textContent = (mode === 'ClosestPoint' ? 'Closest Point' : 'Closest Part') + ' \u2192 move your mouse over the body';
+        return;
+      }
+      const hits = raycaster.intersectObjects(bodyParts, false);
+      if (hits.length) {
+        highlight(hits[0].object);
+        if (mode === 'ClosestPoint') {
           marker.position.copy(hits[0].point);
           marker.visible = true;
-          const reg = nearestRegionToPoint(hits[0].point);
-          if (reg) showRegion(reg.name);
-          readout.textContent = 'Closest Point \u2192 ' + (reg ? reg.name : 'surface');
+          readout.textContent = 'Closest Point \u2192 ' + hits[0].object.name;
         } else {
-          readout.textContent = 'Closest Point \u2192 aim at the body';
-        }
-      } else {
-        const hits = raycaster.intersectObjects(pickRegions, false);
-        if (hits.length) {
-          showRegion(hits[0].object.name);
           marker.position.copy(hits[0].object.position);
           marker.visible = true;
           readout.textContent = 'Closest Part \u2192 ' + hits[0].object.name;
-        } else {
-          readout.textContent = 'Closest Part \u2192 aim at the body';
         }
+      } else {
+        readout.textContent = (mode === 'ClosestPoint' ? 'Closest Point' : 'Closest Part') + ' \u2192 aim at the body';
       }
     } else {
-      showRegion(mode);
-      marker.position.copy(regions[mode].position);
+      const mesh = parts[mode];
+      highlight(mesh);
+      marker.position.copy(mesh.position);
       marker.visible = true;
       readout.textContent = 'Hit Location \u2192 ' + mode;
     }
